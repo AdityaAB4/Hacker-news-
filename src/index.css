@@ -1,0 +1,11 @@
+/* ./src/index.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+.bgimg{
+    background: url('https://pixabay.com/photos/milky-way-starry-sky-night-sky-star-2750627/');
+
+}
+
