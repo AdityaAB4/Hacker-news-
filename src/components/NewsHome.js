@@ -14,7 +14,7 @@ const NewsHome = () => {
   }, [term]);
   const fetchProducts = () => {
     axios
-      .get(`http://hn.algolia.com/api/v1/search?query=${term}`)
+      .get(`https://hn.algolia.com/api/v1/search?query=${term}`)
       .then((res) => {
         console.log(res);
         setProducts(res.data.hits);
@@ -22,6 +22,8 @@ const NewsHome = () => {
       .catch((err) => {
         console.log(err);
       });
+
+
   };
   return (
     <div>

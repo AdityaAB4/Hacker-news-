@@ -11,7 +11,7 @@ const NewsItem = ({ match }) => {
   }, []);
   const fetchProduct = () => {
     axios
-      .get(`http://hn.algolia.com/api/v1/items/${match.params.id}`)
+      .get(`https://hn.algolia.com/api/v1/items/${match.params.id}`)
       .then((res) => {
         setData(res.data);
         setComData(res.data.children);
