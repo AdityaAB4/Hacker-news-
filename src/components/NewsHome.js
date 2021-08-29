@@ -5,41 +5,70 @@ import axios from "axios";
 import ImageSearch from "./NewsSearch";
 import Heading from "./Heading";
 import Card from "./Card";
+import Loader from "react-loader-spinner";
 const NewsHome = () => {
-  const [products, setProducts] = useState([]);
-    const [term, setTerm] = useState("");
+  const [news, setNews] = useState([]);
+  const [term, setTerm] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
+
 
   useEffect(() => {
-    fetchProducts();
+    fetchNews();
   }, [term]);
-  const fetchProducts = () => {
+  const fetchNews = () => {
     axios
       .get(`https://hn.algolia.com/api/v1/search?query=${term}`)
       .then((res) => {
         console.log(res);
-        setProducts(res.data.hits);
+        setNews(res.data.hits);
+        setIsLoading(false);
+        
       })
       .catch((err) => {
         console.log(err);
       });
-
-
   };
   return (
     <div>
       <Heading />
 
       <ImageSearch searchText={(text) => setTerm(text)} />
-      <div className="item-container">
-        {products.map((product) => (
-          <Card key={product.objectID}>
-            <div className="card" key={product.objectID}>
-              <h3>{product.title}</h3>
-              <Link to={`/product/${product.objectID}`}>View</Link>
-            </div>
-          </Card>
-        ))}
-      </div>
+      {!isLoading && news.length === 0 && (
+        <h1 className="text-6xl text-center mx-auto">No News Found...</h1>
+      )}
+      {isLoading ? (
+        <>
+          {" "}
+          <div>
+            <Loader
+              className="flex justify-center"
+              type="Bars"
+              color="#34d399"
+              height={50}
+              width={50}
+            />
+          </div>
+        </>
+      ) : (
+        <>
+          {" "}
+          <div className="item-container">
+            {news.map((news_item) => (
+              <Card key={news_item.objectID}>
+                <div className="card" key={news_item.objectID}>
+                  <h3>{news_item.title}</h3>
+                  <Link to={`/news_item/${news_item.objectID}`}>
+                    <span className="text-green-400 hover:text-green-600">
+                      {" "}
+                      View{" "}
+                    </span>
+                  </Link>
+                </div>
+              </Card>
+            ))}
+          </div>
+        </>
+      )}
     </div>
   );
 };

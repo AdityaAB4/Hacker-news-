@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 const ImageSearch = ({ searchText }) => {
-  const [text, setText] = useState("test");
+  const [text, setText] = useState("term");
   const onSubmit = (e) => {
     e.preventDefault();
     searchText(text);
